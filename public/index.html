@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tees By Shelsea - Premium Clothing for Everyone</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2>Tees By Shelsea</h2>
+                    <span class="tagline">Premium Quality • Affordable Prices</span>
+                </div>
+                
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#products" class="nav-link">Products</a>
+                    <a href="#wholesale" class="nav-link">Wholesale</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                
+                <div class="nav-actions">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search products..." class="search-input">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <button class="cart-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <button class="auth-btn" id="authBtn">Sign In</button>
+                </div>
+                
+                <div class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" class="mobile-nav-link">Home</a>
+        <a href="#products" class="mobile-nav-link">Products</a>
+        <a href="#wholesale" class="mobile-nav-link">Wholesale</a>
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to Tees By Shelsea</h1>
+                <p class="hero-subtitle">Discover premium quality clothing for men, women, and children. From casual wear to accessories, we have everything you need at unbeatable prices.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('products')">Shop Now</button>
+                    <button class="btn btn-secondary" onclick="scrollToSection('wholesale')">Wholesale Inquiry</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-placeholder">
+                    <i class="fas fa-tshirt hero-icon"></i>
+                    <p>Premium Quality Clothing</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="featured-section">
+            <div class="container">
+                <h2 class="section-title">Featured Products</h2>
+                <div class="products-grid" id="featuredProducts">
+                    <!-- Featured products will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="categories-section">
+            <div class="container">
+                <h2 class="section-title">Shop by Category</h2>
+                <div class="categories-grid">
+                    <div class="category-card" data-category="men">
+                        <div class="category-icon">
+                            <i class="fas fa-male"></i>
+                        </div>
+                        <h3>Men's Clothing</h3>
+                        <p>T-shirts, Pants, Accessories</p>
+                    </div>
+                    <div class="category-card" data-category="women">
+                        <div class="category-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <h3>Women's Clothing</h3>
+                        <p>Stylish & Comfortable</p>
+                    </div>
+                    <div class="category-card" data-category="kids">
+                        <div class="category-icon">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <h3>Kids & Children</h3>
+                        <p>Fun & Durable</p>
+                    </div>
+                    <div class="category-card" data-category="shoes">
+                        <div class="category-icon">
+                            <i class="fas fa-shoe-prints"></i>
+                        </div>
+                        <h3>Shoes</h3>
+                        <p>Comfortable & Stylish</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="products-section">
+            <div class="container">
+                <h2 class="section-title">Our Products</h2>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Category:</label>
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="men">Men's Clothing</option>
+                            <option value="women">Women's Clothing</option>
+                            <option value="kids">Kids & Children</option>
+                            <option value="shoes">Shoes</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+                
+                <div class="loading" id="productsLoading" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading products...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wholesale Section -->
+        <section id="wholesale" class="wholesale-section">
+            <div class="container">
+                <div class="wholesale-content">
+                    <h2 class="section-title">Wholesale Opportunities</h2>
+                    <div class="wholesale-info">
+                        <div class="wholesale-text">
+                            <h3>Partner with Us</h3>
+                            <p>Join our wholesale program and access exclusive pricing on bulk orders. Perfect for retailers, boutiques, and businesses looking to stock quality clothing.</p>
+                            
+                            <div class="wholesale-benefits">
+                                <div class="benefit">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span>Competitive Wholesale Pricing</span>
+                                </div>
+                                <div class="benefit">
+                                    <i class="fas fa-truck"></i>
+                                    <span>Fast & Reliable Shipping</span>
+                                </div>
+                                <div class="benefit">
+                                    <i class="fas fa-headset"></i>
+                                    <span>Dedicated Support</span>
+                                </div>
+                                <div class="benefit">
+                                    <i class="fas fa-boxes"></i>
+                                    <span>Bulk Order Discounts</span>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-primary" id="wholesaleInquiryBtn">Wholesale Inquiry</button>
+                        </div>
+                        <div class="wholesale-image">
+                            <div class="wholesale-placeholder">
+                                <i class="fas fa-handshake"></i>
+                                <p>Business Partnership</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title">About Tees By Shelsea</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>At Tees By Shelsea, we're passionate about providing high-quality clothing for the entire family. From stylish men's wear to adorable children's outfits, comfortable shoes, and trendy accessories, we have something for everyone.</p>
+                        
+                        <p>Our commitment to quality, affordability, and customer satisfaction has made us a trusted name in both retail and wholesale markets. We work directly with manufacturers to ensure the best prices without compromising on quality.</p>
+                        
+                        <div class="about-stats">
+                            <div class="stat">
+                                <h3>1000+</h3>
+                                <p>Happy Customers</p>
+                            </div>
+                            <div class="stat">
+                                <h3>500+</h3>
+                                <p>Products</p>
+                            </div>
+                            <div class="stat">
+                                <h3>50+</h3>
+                                <p>Wholesale Partners</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">Get in Touch</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Contact Information</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@teesbyshelsea.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Fashion Street, Style City, SC 12345</span>
+                        </div>
+                        
+                        <div class="social-links">
+                            <h4>Follow Us</h4>
+                            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    
+                    <form class="contact-form" id="contactForm">
+                        <h3>Send us a Message</h3>
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="subject" name="subject" required>
+                                <option value="">Select Subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="wholesale">Wholesale Inquiry</option>
+                                <option value="support">Customer Support</option>
+                                <option value="partnership">Business Partnership</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Tees By Shelsea</h3>
+                    <p>Your trusted partner for quality clothing and accessories.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#wholesale">Wholesale</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Business</h4>
+                    <ul>
+                        <li><a href="#">Wholesale Program</a></li>
+                        <li><a href="#">Become a Partner</a></li>
+                        <li><a href="#">Bulk Orders</a></li>
+                        <li><a href="#">Trade Shows</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Tees By Shelsea. All rights reserved. | Developed by MiniMax Agent</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeAuthModal">&times;</span>
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="signin">Sign In</button>
+                    <button class="auth-tab" data-tab="signup">Sign Up</button>
+                </div>
+                
+                <!-- Sign In Form -->
+                <form class="auth-form active" id="signinForm" data-form="signin">
+                    <h3>Welcome Back</h3>
+                    <div class="form-group">
+                        <input type="email" id="signinEmail" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="signinPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                </form>
+                
+                <!-- Sign Up Form -->
+                <form class="auth-form" id="signupForm" data-form="signup">
+                    <h3>Create Account</h3>
+                    <div class="form-group">
+                        <input type="text" id="signupName" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="signupEmail" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="signupPassword" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="accountType" required>
+                            <option value="">Select Account Type</option>
+                            <option value="retail">Retail Customer</option>
+                            <option value="wholesale">Wholesale Partner</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content cart-modal-content">
+            <span class="close-modal" id="closeCartModal">&times;</span>
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Total: $<span id="cartTotal">0.00</span></strong>
+                </div>
+                <div class="cart-actions">
+                    <button class="btn btn-secondary" id="clearCartBtn">Clear Cart</button>
+                    <button class="btn btn-primary" id="checkoutBtn">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content product-modal-content">
+            <span class="close-modal" id="closeProductModal">&times;</span>
+            <div id="productModalContent">
+                <!-- Product details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/cart.js"></script>
+    <script src="scripts/products.js"></script>
+</body>
+</html>
