@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Tees By Shelsea</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        .checkout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        .checkout-form {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .checkout-summary {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .checkout-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .checkout-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: #e1e8ed;
+            z-index: 1;
+        }
+        
+        .checkout-steps::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            height: 2px;
+            background: #667eea;
+            transition: width 0.3s ease;
+            z-index: 2;
+        }
+        
+        .checkout-steps[data-step="1"]::after { width: 0%; }
+        .checkout-steps[data-step="2"]::after { width: 33.33%; }
+        .checkout-steps[data-step="3"]::after { width: 66.66%; }
+        .checkout-steps[data-step="4"]::after { width: 100%; }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e1e8ed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active .step-number {
+            background: #667eea;
+            color: white;
+        }
+        
+        .step.completed .step-number {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .step-title {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            text-align: center;
+        }
+        
+        .step.active .step-title {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .form-section {
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-input.error {
+            border-color: #e74c3c;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .payment-method {
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: #667eea;
+        }
+        
+        .payment-method.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        .payment-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: #667eea;
+        }
+        
+        .payment-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e1e8ed;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .item-variant {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .item-price {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+        
+        .summary-row.total {
+            border-top: 2px solid #e1e8ed;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #e1e8ed;
+            color: #2c3e50;
+        }
+        
+        .btn-secondary:hover {
+            background: #d1d8dd;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .success-message.active {
+            display: block;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+        
+        .promo-code {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .promo-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e1e8ed;
+            border-radius: 5px;
+        }
+        
+        .apply-promo {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .apply-promo:hover {
+            background: #5a6fd8;
+        }
+        
+        #stripe-card-element {
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2><a href="index.html" style="text-decoration: none; color: inherit;">Tees By Shelsea</a></h2>
+                    <span class="tagline">Premium Quality • Affordable Prices</span>
+                </div>
+                
+                <div class="nav-menu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link">Products</a>
+                    <a href="wholesale.html" class="nav-link">Wholesale</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                
+                <div class="nav-actions">
+                    <button class="cart-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <button class="auth-btn" id="authBtn">Sign In</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="checkout-container">
+        <!-- Checkout Form -->
+        <div class="checkout-form">
+            <!-- Progress Steps -->
+            <div class="checkout-steps" data-step="1">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Shipping</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Payment</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Review</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Complete</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Shipping Information -->
+            <div class="form-section active" id="shipping-section">
+                <h2 class="section-title">Shipping Information</h2>
+                <form id="shipping-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">First Name *</label>
+                            <input type="text" class="form-input" id="firstName" required>
+                            <div class="error-message" id="firstName-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name *</label>
+                            <input type="text" class="form-input" id="lastName" required>
+                            <div class="error-message" id="lastName-error"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address *</label>
+                        <input type="email" class="form-input" id="email" required>
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Phone Number *</label>
+                        <input type="tel" class="form-input" id="phone" required>
+                        <div class="error-message" id="phone-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="address">Street Address *</label>
+                        <input type="text" class="form-input" id="address" required>
+                        <div class="error-message" id="address-error"></div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="city">City *</label>
+                            <input type="text" class="form-input" id="city" required>
+                            <div class="error-message" id="city-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="state">State/Province *</label>
+                            <input type="text" class="form-input" id="state" required>
+                            <div class="error-message" id="state-error"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="zipCode">ZIP/Postal Code *</label>
+                            <input type="text" class="form-input" id="zipCode" required>
+                            <div class="error-message" id="zipCode-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="country">Country *</label>
+                            <select class="form-input" id="country" required>
+                                <option value="">Select Country</option>
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="GB">United Kingdom</option>
+                                <option value="AU">Australia</option>
+                                <option value="DE">Germany</option>
+                                <option value="FR">France</option>
+                                <option value="IT">Italy</option>
+                                <option value="ES">Spain</option>
+                                <option value="NL">Netherlands</option>
+                                <option value="BE">Belgium</option>
+                                <option value="CH">Switzerland</option>
+                                <option value="AT">Austria</option>
+                                <option value="SE">Sweden</option>
+                                <option value="NO">Norway</option>
+                                <option value="DK">Denmark</option>
+                                <option value="FI">Finland</option>
+                                <option value="JP">Japan</option>
+                                <option value="KR">South Korea</option>
+                                <option value="SG">Singapore</option>
+                                <option value="HK">Hong Kong</option>
+                                <option value="NZ">New Zealand</option>
+                            </select>
+                            <div class="error-message" id="country-error"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='products.html'">
+                            <i class="fas fa-arrow-left"></i> Continue Shopping
+                        </button>
+                        <button type="button" class="btn btn-primary" id="continueToPayment">
+                            Continue to Payment <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 2: Payment Information -->
+            <div class="form-section" id="payment-section">
+                <h2 class="section-title">Payment Information</h2>
+                
+                <div class="payment-methods">
+                    <div class="payment-method active" data-method="card">
+                        <div class="payment-icon"><i class="fas fa-credit-card"></i></div>
+                        <div class="payment-name">Credit Card</div>
+                    </div>
+                    <div class="payment-method" data-method="paypal">
+                        <div class="payment-icon"><i class="fab fa-paypal"></i></div>
+                        <div class="payment-name">PayPal</div>
+                    </div>
+                    <div class="payment-method" data-method="apple">
+                        <div class="payment-icon"><i class="fab fa-apple-pay"></i></div>
+                        <div class="payment-name">Apple Pay</div>
+                    </div>
+                </div>
+                
+                <div id="card-payment" class="payment-form">
+                    <div id="stripe-card-element">
+                        <!-- Stripe Elements will create form elements here -->
+                    </div>
+                    <div id="card-errors" class="error-message"></div>
+                </div>
+                
+                <div id="paypal-payment" class="payment-form" style="display: none;">
+                    <div id="paypal-button-container"></div>
+                </div>
+                
+                <div id="apple-payment" class="payment-form" style="display: none;">
+                    <div id="apple-pay-button"></div>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" id="backToShipping">
+                        <i class="fas fa-arrow-left"></i> Back to Shipping
+                    </button>
+                    <button type="button" class="btn btn-primary" id="continueToReview">
+                        Review Order <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Order Review -->
+            <div class="form-section" id="review-section">
+                <h2 class="section-title">Review Your Order</h2>
+                
+                <div class="review-content">
+                    <h3>Shipping Address</h3>
+                    <div id="shipping-review" class="review-block"></div>
+                    
+                    <h3>Payment Method</h3>
+                    <div id="payment-review" class="review-block"></div>
+                    
+                    <h3>Order Items</h3>
+                    <div id="items-review" class="review-block"></div>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" id="backToPayment">
+                        <i class="fas fa-arrow-left"></i> Back to Payment
+                    </button>
+                    <button type="button" class="btn btn-primary" id="placeOrder">
+                        <i class="fas fa-lock"></i> Place Order
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Order Complete -->
+            <div class="form-section" id="complete-section">
+                <div class="success-message">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>Order Placed Successfully!</h2>
+                    <p>Thank you for your purchase. Your order confirmation has been sent to your email.</p>
+                    <div id="order-details"></div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='products.html'">
+                            Continue Shopping
+                        </button>
+                        <button type="button" class="btn btn-primary" id="trackOrder">
+                            Track Your Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #667eea;"></i>
+                <p>Processing your order...</p>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="checkout-summary">
+            <h3>Order Summary</h3>
+            
+            <div id="order-items"></div>
+            
+            <div class="promo-code">
+                <input type="text" class="promo-input" id="promoCode" placeholder="Enter promo code">
+                <button type="button" class="apply-promo" id="applyPromo">Apply</button>
+            </div>
+            
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="subtotal">$0.00</span>
+            </div>
+            
+            <div class="summary-row">
+                <span>Shipping:</span>
+                <span id="shipping">$0.00</span>
+            </div>
+            
+            <div class="summary-row">
+                <span>Tax:</span>
+                <span id="tax">$0.00</span>
+            </div>
+            
+            <div class="summary-row" id="discount-row" style="display: none;">
+                <span>Discount:</span>
+                <span id="discount">$0.00</span>
+            </div>
+            
+            <div class="summary-row total">
+                <span>Total:</span>
+                <span id="total">$0.00</span>
+            </div>
+            
+            <div class="security-notice" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; font-size: 0.8rem; color: #7f8c8d;">
+                <i class="fas fa-lock" style="color: #27ae60; margin-right: 5px;"></i>
+                Your payment information is secure and encrypted
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/checkout.js"></script>
+</body>
+</html>

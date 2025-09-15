@@ -233,6 +233,47 @@ class CartManager {
         }
     }
     
+    // Proceed to checkout
+    proceedToCheckout() {
+        if (this.app.cart.length === 0) {
+            this.app.showNotification('Your cart is empty', 'error');
+            return;
+        }
+        
+        // Save cart to localStorage for checkout page
+        localStorage.setItem('cart', JSON.stringify(this.app.cart));
+        
+        // Redirect to checkout page
+        window.location.href = 'checkout.html';
+    }
+    
+    // Quick checkout (for single product)
+    quickCheckout(productId, size, color, quantity = 1) {
+        const product = this.app.products.find(p => p.id === productId);
+        if (!product) return;
+        
+        const price = this.app.currentUser?.accountType === 'wholesale' 
+            ? product.wholesalePrice 
+            : product.retailPrice;
+        
+        const cartItem = {
+            productId,
+            name: product.name,
+            price,
+            size,
+            color,
+            quantity,
+            image: product.images[0],
+            addedAt: new Date().toISOString()
+        };
+        
+        // Clear cart and add only this item
+        localStorage.setItem('cart', JSON.stringify([cartItem]));
+        
+        // Redirect to checkout
+        window.location.href = 'checkout.html';
+    }
+    
     // Get cart analytics
     getCartAnalytics() {
         const analytics = {

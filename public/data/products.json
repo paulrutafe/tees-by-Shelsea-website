@@ -1,0 +1,273 @@
+[
+  {
+    "id": "m001",
+    "name": "Classic Cotton T-Shirt",
+    "description": "Premium quality cotton t-shirt with modern fit. Perfect for casual wear and everyday comfort.",
+    "category": "men",
+    "subcategory": "t-shirts",
+    "retailPrice": 24.99,
+    "wholesalePrice": 12.50,
+    "stock": 150,
+    "sizes": ["S", "M", "L", "XL", "XXL"],
+    "colors": ["White", "Black", "Navy", "Gray", "Red"],
+    "featured": true,
+    "images": [
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1583743814966-8936f37f0e6a?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [
+      "https://cdn.pixabay.com/video/2019/05/20/23203-337265097_large.mp4",
+      "https://cdn.pixabay.com/video/2020/04/18/36903-410717078_large.mp4"
+    ],
+    "tags": ["cotton", "casual", "comfortable", "basic"],
+    "reviews": {
+      "rating": 4.5,
+      "count": 128
+    }
+  },
+  {
+    "id": "m002",
+    "name": "Denim Classic Jeans",
+    "description": "High-quality denim jeans with perfect fit and durability. Classic style for everyday wear.",
+    "category": "men",
+    "subcategory": "pants",
+    "retailPrice": 59.99,
+    "wholesalePrice": 30.00,
+    "stock": 85,
+    "sizes": ["28", "30", "32", "34", "36", "38"],
+    "colors": ["Blue", "Black", "Light Blue", "Dark Blue"],
+    "featured": true,
+    "images": [
+      "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [
+      "https://cdn.pixabay.com/video/2019/03/11/21945-323919544_large.mp4"
+    ],
+    "tags": ["denim", "casual", "durable", "classic"],
+    "reviews": {
+      "rating": 4.7,
+      "count": 96
+    }
+  },
+  {
+    "id": "m003",
+    "name": "Business Casual Shirt",
+    "description": "Professional cotton blend shirt perfect for office wear and business meetings.",
+    "category": "men",
+    "subcategory": "shirts",
+    "retailPrice": 45.99,
+    "wholesalePrice": 23.00,
+    "stock": 120,
+    "sizes": ["S", "M", "L", "XL", "XXL"],
+    "colors": ["White", "Light Blue", "Light Pink", "Gray"],
+    "featured": false,
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [],
+    "tags": ["business", "formal", "professional", "cotton"],
+    "reviews": {
+      "rating": 4.3,
+      "count": 74
+    }
+  },
+  {
+    "id": "w001",
+    "name": "Elegant Summer Dress",
+    "description": "Beautiful flowy summer dress perfect for casual outings and special occasions.",
+    "category": "women",
+    "subcategory": "dresses",
+    "retailPrice": 68.99,
+    "wholesalePrice": 34.50,
+    "stock": 95,
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "colors": ["Floral Print", "Solid Blue", "Black", "White"],
+    "featured": true,
+    "images": [
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1572804013427-4d7ca7268217?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [
+      "https://cdn.pixabay.com/video/2021/04/05/70230-534322961_large.mp4",
+      "https://cdn.pixabay.com/video/2020/03/05/33126-397077619_large.mp4"
+    ],
+    "tags": ["elegant", "summer", "casual", "flowy"],
+    "reviews": {
+      "rating": 4.6,
+      "count": 112
+    }
+  },
+  {
+    "id": "w002",
+    "name": "Comfortable Leggings",
+    "description": "High-quality stretchy leggings perfect for yoga, gym, or casual wear.",
+    "category": "women",
+    "subcategory": "pants",
+    "retailPrice": 32.99,
+    "wholesalePrice": 16.50,
+    "stock": 200,
+    "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+    "colors": ["Black", "Navy", "Gray", "Purple", "Pink"],
+    "featured": false,
+    "images": [
+      "https://images.unsplash.com/photo-1506629905607-d75a4cb3b052?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [
+      "https://cdn.pixabay.com/video/2020/08/15/47005-448623516_large.mp4"
+    ],
+    "tags": ["comfortable", "stretchy", "activewear", "casual"],
+    "reviews": {
+      "rating": 4.4,
+      "count": 203
+    }
+  },
+  {
+    "id": "k001",
+    "name": "Fun Cartoon T-Shirt",
+    "description": "Colorful cartoon-themed t-shirt that kids love. Soft cotton material for comfort.",
+    "category": "kids",
+    "subcategory": "t-shirts",
+    "retailPrice": 18.99,
+    "wholesalePrice": 9.50,
+    "stock": 180,
+    "sizes": ["2T", "3T", "4T", "5", "6", "7", "8", "10", "12"],
+    "colors": ["Blue", "Pink", "Yellow", "Green", "Red"],
+    "featured": true,
+    "images": [
+      "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [
+      "https://cdn.pixabay.com/video/2019/12/27/31105-382949854_large.mp4"
+    ],
+    "tags": ["kids", "cartoon", "colorful", "soft"],
+    "reviews": {
+      "rating": 4.8,
+      "count": 156
+    }
+  },
+  {
+    "id": "k002",
+    "name": "Comfortable Kids Jeans",
+    "description": "Durable and comfortable jeans designed specifically for active children.",
+    "category": "kids",
+    "subcategory": "pants",
+    "retailPrice": 35.99,
+    "wholesalePrice": 18.00,
+    "stock": 140,
+    "sizes": ["2T", "3T", "4T", "5", "6", "7", "8", "10", "12", "14"],
+    "colors": ["Blue", "Black", "Light Blue"],
+    "featured": false,
+    "images": [
+      "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [],
+    "tags": ["kids", "durable", "comfortable", "active"],
+    "reviews": {
+      "rating": 4.5,
+      "count": 89
+    }
+  },
+  {
+    "id": "s001",
+    "name": "Running Sneakers",
+    "description": "Lightweight and comfortable running sneakers with excellent cushioning and support.",
+    "category": "shoes",
+    "subcategory": "sneakers",
+    "retailPrice": 89.99,
+    "wholesalePrice": 45.00,
+    "stock": 75,
+    "sizes": ["6", "7", "8", "9", "10", "11", "12"],
+    "colors": ["White", "Black", "Blue", "Red", "Gray"],
+    "featured": true,
+    "images": [
+      "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [
+      "https://cdn.pixabay.com/video/2020/12/17/60835-490192985_large.mp4"
+    ],
+    "tags": ["running", "comfortable", "lightweight", "athletic"],
+    "reviews": {
+      "rating": 4.7,
+      "count": 145
+    }
+  },
+  {
+    "id": "s002",
+    "name": "Casual Canvas Shoes",
+    "description": "Classic canvas shoes perfect for everyday casual wear. Versatile and comfortable.",
+    "category": "shoes",
+    "subcategory": "casual",
+    "retailPrice": 45.99,
+    "wholesalePrice": 23.00,
+    "stock": 110,
+    "sizes": ["6", "7", "8", "9", "10", "11", "12"],
+    "colors": ["White", "Black", "Red", "Navy", "Pink"],
+    "featured": false,
+    "images": [
+      "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1560072762-d916eaede865?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [],
+    "tags": ["casual", "canvas", "versatile", "classic"],
+    "reviews": {
+      "rating": 4.2,
+      "count": 78
+    }
+  },
+  {
+    "id": "a001",
+    "name": "Premium Leather Belt",
+    "description": "High-quality genuine leather belt with classic buckle. Perfect for formal and casual wear.",
+    "category": "accessories",
+    "subcategory": "belts",
+    "retailPrice": 39.99,
+    "wholesalePrice": 20.00,
+    "stock": 85,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Black", "Brown", "Tan"],
+    "featured": false,
+    "images": [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1609587312208-cea54be969e7?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [],
+    "tags": ["leather", "premium", "classic", "versatile"],
+    "reviews": {
+      "rating": 4.6,
+      "count": 92
+    }
+  },
+  {
+    "id": "a002",
+    "name": "Stylish Baseball Cap",
+    "description": "Adjustable baseball cap with modern style. Perfect for casual outings and sun protection.",
+    "category": "accessories",
+    "subcategory": "hats",
+    "retailPrice": 22.99,
+    "wholesalePrice": 11.50,
+    "stock": 165,
+    "sizes": ["One Size"],
+    "colors": ["Black", "Navy", "Red", "White", "Gray"],
+    "featured": false,
+    "images": [
+      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&h=500&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1521369909029-2afed882baee?w=500&h=500&fit=crop&crop=center"
+    ],
+    "videos": [],
+    "tags": ["cap", "adjustable", "casual", "sun protection"],
+    "reviews": {
+      "rating": 4.3,
+      "count": 67
+    }
+  }
+]

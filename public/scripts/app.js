@@ -433,14 +433,11 @@ class TeesApp {
                 return;
             }
             
-            if (!this.currentUser) {
-                this.hideModal(modal);
-                this.showAuthModal();
-                this.showNotification('Please sign in to checkout', 'info');
-                return;
-            }
+            // Save cart to localStorage for checkout page
+            this.saveCartToStorage();
             
-            this.processCheckout();
+            // Redirect to checkout page
+            window.location.href = 'checkout.html';
         };
         
         this.showModal(modal);
